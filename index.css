@@ -1,0 +1,14 @@
+body {
+    background-color: #111;
+    color: #eee;
+    font-family: monospace;
+    font-size: 16pt;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body canvas {
+    width: 512px;
+    height: 512px;
+}
