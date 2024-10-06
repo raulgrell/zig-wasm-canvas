@@ -5,4 +5,8 @@ one of the official mozilla examples.
 
 https://developer.mozilla.org/en-US/docs/WebAssembly
 
-Compile with `zig build-lib -dynamic -rdynamic -target wasm32-freestanding -OReleaseSmall main.zig`
+As of Zig v0.12.0, compile with the following command:
+
+```sh
+zig build-exe main.zig -target wasm32-freestanding -fno-entry --export=onInit --export=onAnimationFrame
+```
