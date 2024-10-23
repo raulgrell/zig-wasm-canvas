@@ -9,6 +9,6 @@ body {
 }
 
 body canvas {
-    width: 512px;
-    height: 512px;
+    width: 100vw;
+    height: 100vh;
 }
