@@ -3,8 +3,8 @@ const enums = @import("./enums.zig");
 
 // console API
 const Imports = struct {
-    extern fn jsConsoleLogWrite(ptr: [*]const u8, len: usize) void;
-    extern fn jsConsoleLogFlush() void;
+    extern "sys" fn jsConsoleLogWrite(ptr: [*]const u8, len: usize) void;
+    extern "sys" fn jsConsoleLogFlush() void;
 };
 
 pub const Console = struct {
@@ -25,40 +25,28 @@ pub const Console = struct {
     }
 };
 
-// Shaders
-extern fn compileShader(source: *const u8, len: c_uint, type: c_uint) c_uint;
-extern fn linkShaderProgram(vertexShaderId: c_uint, fragmentShaderId: c_uint) c_uint;
+// gl API
 
-// explicit GL externs
-extern fn glEnable(_: c_uint) void;
-extern fn glDepthFunc(_: c_uint) void;
-extern fn glClear(_: c_uint) void;
-extern fn glGetAttribLocation(_: c_uint, _: *const u8, _: c_uint) c_int;
-extern fn glGetUniformLocation(_: c_uint, _: *const u8, _: c_uint) c_int;
-extern fn glUniform4fv(_: c_int, _: f32, _: f32, _: f32, _: f32) void;
-extern fn glCreateBuffer() c_uint;
-extern fn glBindBuffer(_: c_uint, _: c_uint) void;
-extern fn glBufferData(_: c_uint, _: *const f32, _: c_uint, _: c_uint) void;
-extern fn glUseProgram(_: c_uint) void;
-extern fn glEnableVertexAttribArray(_: c_uint) void;
-extern fn glVertexAttribPointer(_: c_uint, _: c_uint, _: c_uint, _: c_uint, _: c_uint, _: c_uint) void;
-
-// automated GL externs
-extern fn clearColor(_: f32, _: f32, _: f32, _: f32) void;
-extern fn drawArrays(_: c_uint, _: c_uint, _: c_uint) void;
-
-pub const WebGL2Context = struct {
-    clearColor: ?fn (f32, f32, f32, f32) void,
-    drawArrays: ?fn (u32, i32, i32) void,
-
-    pub fn init(env: ?*anyopaque) WebGL2Context {
-        const gl = @field(env, "gl");
-        return WebGL2Context{
-            .clearColor = @field(gl, "clearColor"),
-            .drawArrays = @field(gl, "drawArrays"),
-        };
-    }
+const WebGL2API = struct {
+    extern fn clearColor(f32, f32, f32, f32) void;
+    extern fn drawArrays(u32, i32, i32) void;
+    extern fn enable(_: u32) void;
+    extern fn depthFunc(_: u32) void;
+    extern fn clear(_: u32) void;
+    extern fn getAttribLocation(_: c_uint, _: *const u8, _: c_uint) c_int;
+    extern fn getUniformLocation(_: u32, _: *const u8, _: u32) i32;
+    extern fn uniform4fv(_: i32, _: f32, _: f32, _: f32, _: f32) void;
+    extern fn createBuffer() u32;
+    extern fn bindBuffer(_: u32, _: u32) void;
+    extern fn bufferData(_: u32, _: *const f32, _: u32, _: u32) void;
+    extern fn useProgram(_: u32) void;
+    extern fn enableVertexAttribArray(_: u32) void;
+    extern fn vertexAttribPointer(_: u32, _: u32, _: u32, _: u32, _: u32, _: u32) void;
+    extern fn compileShader(source: *const u8, len: u32, type: u32) u32;
+    extern fn linkShaderProgram(vertexShaderId: u32, fragmentShaderId: u32) u32;
 };
+
+// Shaders
 
 const vertexShader =
     \\attribute vec4 a_position;
@@ -77,49 +65,50 @@ const fragmentShader =
 
 const positions: []const f32 = &.{ 0, 0, 0, 0.5, 0.7, 0 };
 
-var program_id: c_uint = undefined;
-var positionAttributeLocation: c_int = undefined;
-var offsetUniformLocation: c_int = undefined;
-var positionBuffer: c_uint = undefined;
+var program_id: u32 = undefined;
+var positionAttributeLocation: i32 = undefined;
+var offsetUniformLocation: i32 = undefined;
+var positionBuffer: u32 = undefined;
 
 export fn onInit() void {
     Console.log("timestamp: {s}\n", .{"2000-01-01T12:00:00Z"});
-    clearColor(0.0, 0.0, 0.0, 1.0);
-    glEnable(enums.DEPTH_TEST);
-    glDepthFunc(enums.LEQUAL);
-    glClear(enums.COLOR_BUFFER_BIT | enums.DEPTH_BUFFER_BIT);
+    WebGL2API.clearColor(0.0, 0.0, 0.0, 1.0);
+    WebGL2API.enable(enums.DEPTH_TEST);
+    WebGL2API.depthFunc(enums.LEQUAL);
+    WebGL2API.clear(enums.COLOR_BUFFER_BIT | enums.DEPTH_BUFFER_BIT);
 
-    const vertex_shader_id = compileShader(&vertexShader[0], vertexShader.len, enums.VERTEX_SHADER);
-    const fsId = compileShader(&fragmentShader[0], fragmentShader.len, enums.FRAGMENT_SHADER);
+    const vertex_shader_id = WebGL2API.compileShader(&vertexShader[0], vertexShader.len, enums.VERTEX_SHADER);
+    const fsId = WebGL2API.compileShader(&fragmentShader[0], fragmentShader.len, enums.FRAGMENT_SHADER);
 
-    program_id = linkShaderProgram(vertex_shader_id, fsId);
+    program_id = WebGL2API.linkShaderProgram(vertex_shader_id, fsId);
+    Console.log("program id: {any}\n", .{program_id});
 
     const a_position = "a_position";
     const u_offset = "u_offset";
 
-    positionAttributeLocation = glGetAttribLocation(program_id, &a_position[0], a_position.len);
-    offsetUniformLocation = glGetUniformLocation(program_id, &u_offset[0], u_offset.len);
+    positionAttributeLocation = WebGL2API.getAttribLocation(program_id, &a_position[0], a_position.len);
+    offsetUniformLocation = WebGL2API.getUniformLocation(program_id, &u_offset[0], u_offset.len);
 
-    positionBuffer = glCreateBuffer();
-    glBindBuffer(enums.ARRAY_BUFFER, positionBuffer);
-    glBufferData(enums.ARRAY_BUFFER, &positions[0], 6, enums.STATIC_DRAW);
+    positionBuffer = WebGL2API.createBuffer();
+    WebGL2API.bindBuffer(enums.ARRAY_BUFFER, positionBuffer);
+    WebGL2API.bufferData(enums.ARRAY_BUFFER, &positions[0], 6, enums.STATIC_DRAW);
 }
 
-var previous: c_int = 0;
+var previous: i32 = 0;
 var x: f32 = 0;
 
-export fn onAnimationFrame(timestamp: c_int) void {
+export fn onAnimationFrame(timestamp: i32) void {
     const delta = if (previous > 0) timestamp - previous else 0;
     x += @as(f32, @floatFromInt(delta)) / 1000.0;
     if (x > 1) x = -2;
 
-    glClear(enums.COLOR_BUFFER_BIT | enums.DEPTH_BUFFER_BIT);
+    WebGL2API.clear(enums.COLOR_BUFFER_BIT | enums.DEPTH_BUFFER_BIT);
 
-    glUseProgram(program_id);
-    glEnableVertexAttribArray(@intCast(positionAttributeLocation));
-    glBindBuffer(enums.ARRAY_BUFFER, positionBuffer);
-    glVertexAttribPointer(@intCast(positionAttributeLocation), 2, enums.FLOAT, 0, 0, 0);
-    glUniform4fv(offsetUniformLocation, x, 0.0, 0.0, 0.0);
-    drawArrays(enums.TRIANGLES, 0, 3);
+    WebGL2API.useProgram(program_id);
+    WebGL2API.enableVertexAttribArray(@intCast(positionAttributeLocation));
+    WebGL2API.bindBuffer(enums.ARRAY_BUFFER, positionBuffer);
+    WebGL2API.vertexAttribPointer(@intCast(positionAttributeLocation), 2, enums.FLOAT, 0, 0, 0);
+    WebGL2API.uniform4fv(offsetUniformLocation, x, 0.0, 0.0, 0.0);
+    WebGL2API.drawArrays(enums.TRIANGLES, 0, 3);
     previous = timestamp;
 }

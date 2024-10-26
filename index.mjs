@@ -40,49 +40,49 @@ const ENV = {
         glPrograms.push(program);
         return glPrograms.length - 1;
     },
-    "glGetUniformLocation": (programId, namePtr, nameLen) => {
+    "getUniformLocation": (programId, namePtr, nameLen) => {
         glUniformLocations.push(GL.getUniformLocation(glPrograms[programId], readCharStr(APP, namePtr, nameLen)));
         return glUniformLocations.length - 1;
     },
-    "glCreateBuffer": () => {
+    "createBuffer": () => {
         glBuffers.push(GL.createBuffer());
         return glBuffers.length - 1;
     },
-    "glBufferData": (type, dataPtr, count, drawType) => {
+    "bufferData": (type, dataPtr, count, drawType) => {
         const floats = new Float32Array(APP.memory.buffer, dataPtr, count);
         GL.bufferData(type, floats, drawType);
     },
 
     // stateful pass-throughs
-    "glGetAttribLocation": (programId, namePtr, nameLen) => {
+    "getAttribLocation": (programId, namePtr, nameLen) => {
         GL.getAttribLocation(glPrograms[programId], readCharStr(APP, namePtr, nameLen));
     },
-    "glUseProgram": (programId) => {
+    "useProgram": (programId) => {
         GL.useProgram(glPrograms[programId]);
     },
-    "glBindBuffer": (type, bufferId) => {
+    "bindBuffer": (type, bufferId) => {
         GL.bindBuffer(type, glBuffers[bufferId]);
     },
-    "glUniform4fv": (locationId, x, y, z, w) => {
+    "uniform4fv": (locationId, x, y, z, w) => {
         GL.uniform4fv(glUniformLocations[locationId], [x, y, z, w]);
     },
 
     // stateless pass-throughs
-    "glEnable": (x) => {
-        GL.enable(x);
-    },
-    "glDepthFunc": (x) => {
-        GL.depthFunc(x);
-    },
-    "glClear": (x) => {
-        GL.clear(x);
-    },
-    "glEnableVertexAttribArray": (x) => {
-        GL.enableVertexAttribArray(x);
-    },
-    "glVertexAttribPointer": (attribLocation, size, type, normalize, stride, offset) => {
-        GL.vertexAttribPointer(attribLocation, size, type, normalize, stride, offset);
-    }
+    // "enable": (x) => {
+    //     GL.enable(x);
+    // },
+    // "depthFunc": (x) => {
+    //     GL.depthFunc(x);
+    // },
+    // "clear": (x) => {
+    //     GL.clear(x);
+    // },
+    // "enableVertexAttribArray": (x) => {
+    //     GL.enableVertexAttribArray(x);
+    // },
+    // "vertexAttribPointer": (attribLocation, size, type, normalize, stride, offset) => {
+    //     GL.vertexAttribPointer(attribLocation, size, type, normalize, stride, offset);
+    // }
 
     // direct bindings
 
@@ -101,9 +101,7 @@ function generateGlApi(gl) {
 function onWindowLoad(event) {
     setViewportFromApp(APP);
     fetchAndInstantiate('main.wasm', {
-        "env": {
-            ...generateGlApi(GL),
-            ...ENV,
+        "sys": {
             "jsConsoleLogWrite": (ptr, len) => {
                 CONSOLE_LOG_BUFFER += new TextDecoder().decode(new Uint8Array(APP.memory.buffer, ptr, len));
             },
@@ -111,6 +109,10 @@ function onWindowLoad(event) {
                 console.log(CONSOLE_LOG_BUFFER);
                 CONSOLE_LOG_BUFFER = "";
             }
+        },
+        "env": {
+            ...generateGlApi(GL),
+            ...ENV, // some functions from GL are transcribed and therefore must override the generated API
         }
     }).then(function (instance) {
         APP.memory = instance.exports.memory;
