@@ -90,9 +90,15 @@ const ENV = {
 
 function generateGlApi(gl) {
     const api = {};
+    window.glFunctions = [];
+    window.glConstants = [];
     for (const key in gl) {
         if (typeof (gl[key]) === "function") {
             api[key] = gl[key].bind(gl);
+            window.glFunctions.push(key);
+        } else if (typeof (gl[key]) === "number") {
+            api[key] = gl[key];
+            window.glConstants.push(key);
         }
     }
     return api;
@@ -101,6 +107,10 @@ function generateGlApi(gl) {
 function onWindowLoad(event) {
     setViewportFromApp(APP);
     fetchAndInstantiate('main.wasm', {
+        "gl": {
+            ...generateGlApi(GL),
+            ...ENV
+        },
         "sys": {
             "jsConsoleLogWrite": (ptr, len) => {
                 CONSOLE_LOG_BUFFER += new TextDecoder().decode(new Uint8Array(APP.memory.buffer, ptr, len));

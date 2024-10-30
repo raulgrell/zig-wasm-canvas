@@ -1,0 +1,44 @@
+Standard,Category,Call name,Inputs,Outputs,Description
+WebGLRenderingContext,The WebGL Context,getContextAttributes(),,WebGLContextAttributes,"The WebGLRenderingContext.getContextAttributes() method returns a WebGLContextAttributes object that contains the actual context parameters. Might return null, if the context is lost. "
+WebGLRenderingContext,The WebGL Context,isContextLost(),,bool,The WebGLRenderingContext.isContextLost() method returns a boolean value indicating whether or not the WebGL context has been lost and must be re-established before rendering can resume. 
+WebGLRenderingContext,The WebGL Context,makeXRCompatible(),,Promise,"The WebGLRenderingContext method makeXRCompatible() ensures that the rendering context described by the WebGLRenderingContext is ready to render the scene for the immersive WebXR device on which it will be displayed. If necessary, the WebGL layer may reconfigure the context to be ready to render to a different device than it originally was. "
+WebGLRenderingContext,Viewing and clipping,scissor(),"(Glint, Glint, Glsizei, Glsizei)",,"The WebGLRenderingContext.scissor() method of the WebGL API sets a scissor box, which limits the drawing to a specified rectangle. "
+WebGLRenderingContext,Viewing and clipping,viewport(),"(Glint, Glint, Glsizei, Glsizei)",,"The WebGLRenderingContext.viewport() method of the WebGL API sets the viewport, which specifies the affine transformation of x and y from normalized device coordinates to window coordinates. "
+WebGLRenderingContext,State information,activeTexture(),(gl.TEXTUREi),,Selects the active texture unit.
+WebGLRenderingContext,State information,blendColor(),"(Glclampf, Glclampf, Glclampf, Glclampf)",,Sets the source and destination blending factors.
+WebGLRenderingContext,State information,blendEquation(),(Glenum),,Sets both the RGB blend equation and alpha blend equation to a single equation.
+WebGLRenderingContext,State information,blendEquationSeparate(),"(Glenum, Glenum)",,Sets the RGB blend equation and alpha blend equation separately.
+WebGLRenderingContext,State information,blendFunc(),"(Glenum, Glenum)",,Defines which function is used for blending pixel arithmetic.
+WebGLRenderingContext,State information,blendFuncSeparate(),"(Glenum, Glenum, Glenum, Glenum)",,Defines which function is used for blending pixel arithmetic for RGB and alpha components separately.
+WebGLRenderingContext,State information,clearColor(),"(Glclampf, Glclampf, Glclampf, Glclampf)",,Specifies the color values used when clearing color buffers.
+WebGLRenderingContext,State information,clearDepth(),(Glclampf),,Specifies the depth value used when clearing the depth buffer.
+WebGLRenderingContext,State information,clearStencil(),(Glint),,Specifies the stencil value used when clearing the stencil buffer.
+WebGLRenderingContext,State information,colorMask(),"(Glboolean, Glboolean, Glboolean, Glboolean)",,Sets which color components to enable or to disable when drawing or rendering to a WebGLFramebuffer.
+WebGLRenderingContext,State information,cullFace(),(Glenum),,Specifies whether or not front- and/or back-facing polygons can be culled.
+WebGLRenderingContext,State information,depthFunction(),(Glenum),,Specifies a function that compares incoming pixel depth to the current depth buffer value.
+WebGLRenderingContext,State information,depthMask(),(Glboolean),,Sets whether writing into the depth buffer is enabled or disabled.
+WebGLRenderingContext,State information,depthRange(),"(Glclampf, Glclampf)",,Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.
+WebGLRenderingContext,State information,disable(),(Glenum),,Disables specific WebGL capabilities for this context.
+WebGLRenderingContext,State information,enable(),(Glenum),,Enables specific WebGL capabilities for this context.
+WebGLRenderingContext,State information,frontFace(),(Glenum),,Specifies whether polygons are front- or back-facing by setting a winding orientation.
+WebGLRenderingContext,State information,getParameter(),(Glenum),(depends on parameter),Returns a value for the passed parameter name.
+WebGLRenderingContext,State information,getError(),,Glenum,Returns error information.
+WebGLRenderingContext,State information,hint(),"(Glenum, Glenum)",,Specifies hints for certain behaviors. The interpretation of these hints depend on the implementation.
+WebGLRenderingContext,State information,isEnabled(),(Glenum),Glboolean,Tests whether a specific WebGL capability is enabled or not for this context.
+WebGLRenderingContext,State information,lineWidth(),(Glfloat),,Sets the line width of rasterized lines.
+WebGLRenderingContext,State information,pixelStorei(),"(Glnum, Glint)",,Specifies the pixel storage modes
+WebGLRenderingContext,State information,polygonOffset(),"(Glfloat, Glfloat)",,Specifies the scale factors and units to calculate depth values.
+WebGLRenderingContext,State information,sampleCoverage(),"(Glclampf, Glboolean)",,Specifies multi-sample coverage parameters for anti-aliasing effects.
+WebGLRenderingContext,State information,stencilFunction(),"(Glenum, Glint, Gluint)",,Sets the both front and back function and reference value for stencil testing.
+WebGLRenderingContext,State information,stencilFuncSeparate(),"(Glenum, Glenum, Glint, Gluint)",,Sets the front and/or back function and reference value for stencil testing.
+WebGLRenderingContext,State information,stencilMask(),(Gluint),,Controls enabling and disabling of both the front and back writing of individual bits in the stencil planes.
+WebGLRenderingContext,State information,stencilMaskSeparate(),"(Glenum, Gluint)",,Controls enabling and disabling of front and/or back writing of individual bits in the stencil planes.
+WebGLRenderingContext,State information,stencilOp(),"(Glenum, Glenum, Glenum)",,Sets both the front and back-facing stencil test actions.
+WebGLRenderingContext,State information,stencilOpSeparate(),"(Glenum, Glenum, Glenum, Glenum)",,Sets the front and/or back-facing stencil test actions.
+WebGLRenderingContext,Buffers,bindBuffer(),"(Glenum, WebGLBuffer)",,Binds a WebGLBuffer object to a given target.
+WebGLRenderingContext,Buffers,bufferData(),"(Glenum, Glsizeiptr, Glenum)",,Updates buffer data.
+WebGLRenderingContext,Buffers,bufferSubData(),"(Glenum, Glintptr)",,Updates buffer data starting at a passed offset.
+WebGLRenderingContext,Buffers,createBuffer(),,WebGLBuffer,Creates a WebGLBuffer object.
+WebGLRenderingContext,Buffers,deleteBuffer(),(WebGLBuffer),,Deletes a WebGLBuffer object.
+WebGLRenderingContext,Buffers,getBufferParameter(),"(Gleneum, Glenum)",(depends on parameter),Returns information about the buffer.
+WebGLRenderingContext,Buffers,isBuffer(),(WebGLBuffer),GLboolean,Returns a Boolean indicating if the passed buffer is valid.
