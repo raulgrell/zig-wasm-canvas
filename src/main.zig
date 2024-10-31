@@ -1,6 +1,5 @@
 const std = @import("std");
-const enums = @import("./enums.zig");
-const gl = @import("./gl.zig");
+const webgl = @import("./webgl.zig");
 
 // console API
 const Imports = struct {
@@ -52,26 +51,26 @@ var positionBuffer: u32 = undefined;
 
 export fn onInit() void {
     Console.log("timestamp: {s}\n", .{"2000-01-01T12:00:00Z"});
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    gl.enable(gl.DEPTH_TEST);
-    gl.depthFunc(gl.LEQUAL);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    webgl.clearColor(0.0, 0.0, 0.0, 1.0);
+    webgl.enable(webgl.DEPTH_TEST);
+    webgl.depthFunc(webgl.LEQUAL);
+    webgl.clear(webgl.COLOR_BUFFER_BIT | webgl.DEPTH_BUFFER_BIT);
 
-    const vertex_shader_id = gl.compileShader(&vertexShader[0], vertexShader.len, enums.VERTEX_SHADER);
-    const fsId = gl.compileShader(&fragmentShader[0], fragmentShader.len, enums.FRAGMENT_SHADER);
+    const vertex_shader_id = webgl.compileShader(&vertexShader[0], vertexShader.len, webgl.VERTEX_SHADER);
+    const fsId = webgl.compileShader(&fragmentShader[0], fragmentShader.len, webgl.FRAGMENT_SHADER);
 
-    program_id = gl.linkShaderProgram(vertex_shader_id, fsId);
+    program_id = webgl.linkShaderProgram(vertex_shader_id, fsId);
     Console.log("program id: {any}\n", .{program_id});
 
     const a_position = "a_position";
     const u_offset = "u_offset";
 
-    positionAttributeLocation = gl.getAttribLocation(program_id, &a_position[0], a_position.len);
-    offsetUniformLocation = gl.getUniformLocation(program_id, &u_offset[0], u_offset.len);
+    positionAttributeLocation = webgl.getAttribLocation(program_id, &a_position[0], a_position.len);
+    offsetUniformLocation = webgl.getUniformLocation(program_id, &u_offset[0], u_offset.len);
 
-    positionBuffer = gl.createBuffer();
-    gl.bindBuffer(enums.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(enums.ARRAY_BUFFER, &positions[0], 6, enums.STATIC_DRAW);
+    positionBuffer = webgl.createBuffer();
+    webgl.bindBuffer(webgl.ARRAY_BUFFER, positionBuffer);
+    webgl.bufferData(webgl.ARRAY_BUFFER, &positions[0], 6, webgl.STATIC_DRAW);
 }
 
 var previous: i32 = 0;
@@ -82,13 +81,13 @@ export fn onAnimationFrame(timestamp: i32) void {
     x += @as(f32, @floatFromInt(delta)) / 1000.0;
     if (x > 1) x = -2;
 
-    gl.clear(enums.COLOR_BUFFER_BIT | enums.DEPTH_BUFFER_BIT);
+    webgl.clear(webgl.COLOR_BUFFER_BIT | webgl.DEPTH_BUFFER_BIT);
 
-    gl.useProgram(program_id);
-    gl.enableVertexAttribArray(@intCast(positionAttributeLocation));
-    gl.bindBuffer(enums.ARRAY_BUFFER, positionBuffer);
-    gl.vertexAttribPointer(@intCast(positionAttributeLocation), 2, enums.FLOAT, 0, 0, 0);
-    gl.uniform4fv(offsetUniformLocation, x, 0.0, 0.0, 0.0);
-    gl.drawArrays(enums.TRIANGLES, 0, 3);
+    webgl.useProgram(program_id);
+    webgl.enableVertexAttribArray(@intCast(positionAttributeLocation));
+    webgl.bindBuffer(webgl.ARRAY_BUFFER, positionBuffer);
+    webgl.vertexAttribPointer(@intCast(positionAttributeLocation), 2, webgl.FLOAT, 0, 0, 0);
+    webgl.uniform4fv(offsetUniformLocation, x, 0.0, 0.0, 0.0);
+    webgl.drawArrays(webgl.TRIANGLES, 0, 3);
     previous = timestamp;
 }
