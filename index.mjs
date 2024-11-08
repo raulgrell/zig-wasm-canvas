@@ -4,67 +4,72 @@
 
 const APP = {
     "memory": undefined,
-    "canvas": document.querySelector("canvas"),
+    "canvas": document.querySelector("canvas")
 };
 
 const GL = APP.canvas.getContext("webgl2");
-
-const shaders = [];
-const glPrograms = [];
-const glBuffers = [];
-const glUniformLocations = [];
-
+const OBJECT_MAP = []; // maps index/u32 against a WebGLObject reference
 var CONSOLE_LOG_BUFFER = "";
 
+// guiding facts forcing an undesired translation layer
+// * every function that references a string requires an intermediate translation layer to interpret and forward the appropriate slice
+// * every function that references or returns a WebGLObject of some type requires an intermediate translation layer to read/write map entries from indices
+// * there are also several other funcctions (like `bufferData()`) that require memory copies even though strings are not involved
+// * and of course there are functions (like get*Location) that have multiple requirements
 const ENV = {
-    // utility functions
-    "compileShader": (sourcePtr, sourceLen, type) => {
-        const source = readCharStr(APP, sourcePtr, sourceLen);
-        const shader = GL.createShader(type);
-        GL.shaderSource(shader, source);
-        GL.compileShader(shader);
-        if (!GL.getShaderParameter(shader, GL.COMPILE_STATUS)) {
-            throw "Error compiling shader:" + GL.getShaderInfoLog(shader);
-        }
-        shaders.push(shader);
-        return shaders.length - 1;
+    "getAttribLocation": (program_id, strPtr, strLen) => {
+        const str = slice2string(APP, strPtr, strLen);
+        return GL.getAttribLocation(OBJECT_MAP[program_id], str); // glint
     },
-    "linkShaderProgram": (vertexShaderId, fragmentShaderId) => {
-        const program = GL.createProgram();
-        GL.attachShader(program, shaders[vertexShaderId]);
-        GL.attachShader(program, shaders[fragmentShaderId]);
-        GL.linkProgram(program);
-        if (!GL.getProgramParameter(program, GL.LINK_STATUS)) {
-            throw ("Error linking program:" + GL.getProgramInfoLog(program));
+    "getUniformLocation": (program_id, strPtr, strLen) => {
+        const str = slice2string(APP, strPtr, strLen);
+        let uniloc = GL.getUniformLocation(OBJECT_MAP[program_id], str); // will objects be unique for caching lookups?
+        let second = GL.getUniformLocation(OBJECT_MAP[program_id], str);
+        console.log(uniloc, second);
+        if (OBJECT_MAP.includes(uniloc)) {
+            return OBJECT_MAP.indexOf(uniloc);
+        } else {
+            OBJECT_MAP.push(uniloc);
+            return OBJECT_MAP.length - 1;
         }
-        glPrograms.push(program);
-        return glPrograms.length - 1;
     },
-    "getUniformLocation": (programId, namePtr, nameLen) => {
-        glUniformLocations.push(GL.getUniformLocation(glPrograms[programId], readCharStr(APP, namePtr, nameLen)));
-        return glUniformLocations.length - 1;
+    "createShader": (type) => {
+        OBJECT_MAP.push(GL.createShader(type));
+        return OBJECT_MAP.length - 1;
+    },
+    "shaderSource": (shader_id, strPtr, strLen) => {
+        const str = slice2string(APP, strPtr, strLen);
+        GL.shaderSource(OBJECT_MAP[shader_id], str);
+    },
+    "compileShader": (shader_id) => {
+        GL.compileShader(OBJECT_MAP[shader_id]);
+    },
+    "createProgram": () => {
+        OBJECT_MAP.push(GL.createProgram());
+        return OBJECT_MAP.length - 1;
+    },
+    "attachShader": (program_id, shader_id) => {
+        GL.attachShader(OBJECT_MAP[program_id], OBJECT_MAP[shader_id]);
+    },
+    "linkProgram": (program_id) => {
+        GL.linkProgram(OBJECT_MAP[program_id]);
     },
     "createBuffer": () => {
-        glBuffers.push(GL.createBuffer());
-        return glBuffers.length - 1;
+        OBJECT_MAP.push(GL.createBuffer());
+        return OBJECT_MAP.length - 1;
     },
     "bufferData": (type, dataPtr, count, drawType) => {
         const floats = new Float32Array(APP.memory.buffer, dataPtr, count);
         GL.bufferData(type, floats, drawType);
     },
-
-    // stateful pass-throughs
-    "getAttribLocation": (programId, namePtr, nameLen) => {
-        GL.getAttribLocation(glPrograms[programId], readCharStr(APP, namePtr, nameLen));
+    "useProgram": (program_id) => {
+        GL.useProgram(OBJECT_MAP[program_id]);
     },
-    "useProgram": (programId) => {
-        GL.useProgram(glPrograms[programId]);
+    "bindBuffer": (type, buffer_id) => {
+        GL.bindBuffer(type, OBJECT_MAP[buffer_id]);
     },
-    "bindBuffer": (type, bufferId) => {
-        GL.bindBuffer(type, glBuffers[bufferId]);
-    },
-    "uniform4fv": (locationId, x, y, z, w) => {
-        GL.uniform4fv(glUniformLocations[locationId], [x, y, z, w]);
+    "uniform4fv": (location_id, x, y, z, w) => {
+        GL.uniform4fv(OBJECT_MAP[location_id], [x, y, z, w]);
     },
 
     // stateless pass-throughs
@@ -148,7 +153,7 @@ function fetchAndInstantiate(url, importObject) {
     );
 }
 
-function readCharStr(app, ptr, len) {
+function slice2string(app, ptr, len) {
     const bytes = new Uint8Array(app.memory.buffer, ptr, len);
     return new TextDecoder("utf-8").decode(bytes);
 }
