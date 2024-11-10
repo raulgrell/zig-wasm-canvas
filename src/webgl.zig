@@ -253,24 +253,6 @@ pub extern "gl" fn drawArrays(u32, i32, i32) void; // Renders primitives from ar
 // isVertexArray()	(WebGLVertexArrayObject)	GLboolean	Returns true if a given object is a valid WebGLVertexArrayObject.
 // bindVertexArray()	(WebGLVertexArrayObject)		Binds a given WebGLVertexArrayObject to the buffer.
 
-// functional interface
-// pub extern "gl" fn clearColor(f32, f32, f32, f32) void;
-// pub extern "gl" fn drawArrays(u32, i32, i32) void;
-// pub extern "gl" fn enable(_: u32) void;
-// pub extern "gl" fn depthFunc(_: u32) void;
-// pub extern "gl" fn clear(_: u32) void;
-// pub extern "gl" fn getAttribLocation(_: c_uint, _: *const u8, _: c_uint) c_int;
-// pub extern "gl" fn getUniformLocation(_: u32, _: *const u8, _: u32) i32;
-// pub extern "gl" fn uniform4fv(_: i32, _: f32, _: f32, _: f32, _: f32) void;
-// pub extern "gl" fn createBuffer() u32;
-// pub extern "gl" fn bindBuffer(_: u32, _: u32) void;
-// pub extern "gl" fn bufferData(_: u32, _: *const f32, _: u32, _: u32) void;
-// pub extern "gl" fn useProgram(_: u32) void;
-// pub extern "gl" fn enableVertexAttribArray(_: u32) void;
-// pub extern "gl" fn vertexAttribPointer(_: u32, _: u32, _: u32, _: u32, _: u32, _: u32) void;
-// pub extern "gl" fn compileShader(_: *const u8, _: u32, _: u32) u32;
-// pub extern "gl" fn c(_: u32, _: u32) u32;
-
 // WebGL 1 Enums - Clearing buffers
 pub const DEPTH_BUFFER_BIT: u16 = 0x00000100;
 pub const STENCIL_BUFFER_BIT: u16 = 0x00000400;

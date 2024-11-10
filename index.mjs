@@ -9,6 +9,7 @@ const APP = {
 
 const GL = APP.canvas.getContext("webgl2");
 const OBJECT_MAP = []; // maps index/u32 against a WebGLObject reference
+const LOCATION_MAP = {}; // maps program IDs to a second map of names against program locations; this prevents redundant references to identical locations, which are not strongl equivalent once passed back from the WebGL API
 var CONSOLE_LOG_BUFFER = "";
 
 // guiding facts forcing an undesired translation layer
@@ -17,21 +18,38 @@ var CONSOLE_LOG_BUFFER = "";
 // * there are also several other funcctions (like `bufferData()`) that require memory copies even though strings are not involved
 // * and of course there are functions (like get*Location) that have multiple requirements
 const ENV = {
-    "getAttribLocation": (program_id, strPtr, strLen) => {
+    "getAttribLocation": (program_id, strPtr, strLen) => { // new (breaks)
+        // specifically, this breaks because the subsequent attribute "reference" (its index in the OBJECT_MAP) is actually passed directly to enableVertexAttribArray(), which needs to be overwritten
         const str = slice2string(APP, strPtr, strLen);
-        return GL.getAttribLocation(OBJECT_MAP[program_id], str); // glint
-    },
-    "getUniformLocation": (program_id, strPtr, strLen) => {
-        const str = slice2string(APP, strPtr, strLen);
-        let uniloc = GL.getUniformLocation(OBJECT_MAP[program_id], str); // will objects be unique for caching lookups?
-        let second = GL.getUniformLocation(OBJECT_MAP[program_id], str);
-        console.log(uniloc, second);
-        if (OBJECT_MAP.includes(uniloc)) {
-            return OBJECT_MAP.indexOf(uniloc);
-        } else {
-            OBJECT_MAP.push(uniloc);
-            return OBJECT_MAP.length - 1;
+        if (!LOCATION_MAP.hasOwnProperty(program_id)) {
+            LOCATION_MAP[program_id] = {};
         }
+        if (!LOCATION_MAP[program_id].hasOwnProperty(str)) {
+            const attloc = GL.getAttribLocation(OBJECT_MAP[program_id], str);
+            OBJECT_MAP.push(attloc);
+            LOCATION_MAP[program_id][str] = OBJECT_MAP.length - 1;
+        }
+        return LOCATION_MAP[program_id][str];
+    },
+    "getUniformLocation": (program_id, strPtr, strLen) => { // new
+        const str = slice2string(APP, strPtr, strLen);
+        if (!LOCATION_MAP.hasOwnProperty(program_id)) {
+            LOCATION_MAP[program_id] = {};
+        }
+        if (!LOCATION_MAP[program_id].hasOwnProperty(str)) {
+            const uniloc = GL.getUniformLocation(OBJECT_MAP[program_id], str);
+            OBJECT_MAP.push(uniloc);
+            LOCATION_MAP[program_id][str] = OBJECT_MAP.length - 1;
+        }
+        return LOCATION_MAP[program_id][str];
+    },
+    "vertexAttribPointer": (attr_id, size, type, normalized, stride, offset) => {
+        const attr = OBJECT_MAP[attr_id];
+        GL.vertexAttribPointer(attr, size, type, normalized, stride, offset);
+    },
+    "enableVertexAttribArray": (attr_id) => {
+        const attr = OBJECT_MAP[attr_id];
+        GL.enableVertexAttribArray(attr);
     },
     "createShader": (type) => {
         OBJECT_MAP.push(GL.createShader(type));
@@ -70,27 +88,7 @@ const ENV = {
     },
     "uniform4fv": (location_id, x, y, z, w) => {
         GL.uniform4fv(OBJECT_MAP[location_id], [x, y, z, w]);
-    },
-
-    // stateless pass-throughs
-    // "enable": (x) => {
-    //     GL.enable(x);
-    // },
-    // "depthFunc": (x) => {
-    //     GL.depthFunc(x);
-    // },
-    // "clear": (x) => {
-    //     GL.clear(x);
-    // },
-    // "enableVertexAttribArray": (x) => {
-    //     GL.enableVertexAttribArray(x);
-    // },
-    // "vertexAttribPointer": (attribLocation, size, type, normalize, stride, offset) => {
-    //     GL.vertexAttribPointer(attribLocation, size, type, normalize, stride, offset);
-    // }
-
-    // direct bindings
-
+    }
 };
 
 function generateGlApi(gl) {
