@@ -109,7 +109,7 @@ function generateGlApi(gl) {
 
 function onWindowLoad(event) {
     setViewportFromApp(APP);
-    fetchAndInstantiate('main.wasm', {
+    fetchAndInstantiate('bin/main.wasm', {
         "gl": {
             ...generateGlApi(GL),
             ...ENV

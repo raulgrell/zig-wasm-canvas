@@ -1,7 +1,13 @@
 .vscode/
 todo/
+node_modules/
 zig-cache/
 *.o
 *.exe
 *.pdb
 *.wasm
+
+# zig compilation units and locks
+*.wasm
+*.o
+*.lock
