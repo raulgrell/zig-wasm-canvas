@@ -1,0 +1,186 @@
+Standard,Category,Call name,Inputs,Outputs,Description
+WebGLRenderingContext,The WebGL Context,getContextAttributes(),,WebGLContextAttributes,"The WebGLRenderingContext.getContextAttributes() method returns a WebGLContextAttributes object that contains the actual context parameters. Might return null, if the context is lost. "
+WebGLRenderingContext,The WebGL Context,isContextLost(),,bool,The WebGLRenderingContext.isContextLost() method returns a boolean value indicating whether or not the WebGL context has been lost and must be re-established before rendering can resume. 
+WebGLRenderingContext,The WebGL Context,makeXRCompatible(),,Promise,"The WebGLRenderingContext method makeXRCompatible() ensures that the rendering context described by the WebGLRenderingContext is ready to render the scene for the immersive WebXR device on which it will be displayed. If necessary, the WebGL layer may reconfigure the context to be ready to render to a different device than it originally was. "
+WebGLRenderingContext,Viewing and clipping,scissor(),"(Glint, Glint, Glsizei, Glsizei)",,"The WebGLRenderingContext.scissor() method of the WebGL API sets a scissor box, which limits the drawing to a specified rectangle. "
+WebGLRenderingContext,Viewing and clipping,viewport(),"(Glint, Glint, Glsizei, Glsizei)",,"The WebGLRenderingContext.viewport() method of the WebGL API sets the viewport, which specifies the affine transformation of x and y from normalized device coordinates to window coordinates. "
+WebGLRenderingContext,State information,activeTexture(),(gl.TEXTUREi),,Selects the active texture unit.
+WebGLRenderingContext,State information,blendColor(),"(Glclampf, Glclampf, Glclampf, Glclampf)",,Sets the source and destination blending factors.
+WebGLRenderingContext,State information,blendEquation(),(Glenum),,Sets both the RGB blend equation and alpha blend equation to a single equation.
+WebGLRenderingContext,State information,blendEquationSeparate(),"(Glenum, Glenum)",,Sets the RGB blend equation and alpha blend equation separately.
+WebGLRenderingContext,State information,blendFunc(),"(Glenum, Glenum)",,Defines which function is used for blending pixel arithmetic.
+WebGLRenderingContext,State information,blendFuncSeparate(),"(Glenum, Glenum, Glenum, Glenum)",,Defines which function is used for blending pixel arithmetic for RGB and alpha components separately.
+WebGLRenderingContext,State information,clearColor(),"(Glclampf, Glclampf, Glclampf, Glclampf)",,Specifies the color values used when clearing color buffers.
+WebGLRenderingContext,State information,clearDepth(),(Glclampf),,Specifies the depth value used when clearing the depth buffer.
+WebGLRenderingContext,State information,clearStencil(),(Glint),,Specifies the stencil value used when clearing the stencil buffer.
+WebGLRenderingContext,State information,colorMask(),"(Glboolean, Glboolean, Glboolean, Glboolean)",,Sets which color components to enable or to disable when drawing or rendering to a WebGLFramebuffer.
+WebGLRenderingContext,State information,cullFace(),(Glenum),,Specifies whether or not front- and/or back-facing polygons can be culled.
+WebGLRenderingContext,State information,depthFunction(),(Glenum),,Specifies a function that compares incoming pixel depth to the current depth buffer value.
+WebGLRenderingContext,State information,depthMask(),(Glboolean),,Sets whether writing into the depth buffer is enabled or disabled.
+WebGLRenderingContext,State information,depthRange(),"(Glclampf, Glclampf)",,Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.
+WebGLRenderingContext,State information,disable(),(Glenum),,Disables specific WebGL capabilities for this context.
+WebGLRenderingContext,State information,enable(),(Glenum),,Enables specific WebGL capabilities for this context.
+WebGLRenderingContext,State information,frontFace(),(Glenum),,Specifies whether polygons are front- or back-facing by setting a winding orientation.
+WebGLRenderingContext,State information,getParameter(),(Glenum),(depends on parameter),Returns a value for the passed parameter name.
+WebGLRenderingContext,State information,getError(),,Glenum,Returns error information.
+WebGLRenderingContext,State information,hint(),"(Glenum, Glenum)",,Specifies hints for certain behaviors. The interpretation of these hints depend on the implementation.
+WebGLRenderingContext,State information,isEnabled(),(Glenum),Glboolean,Tests whether a specific WebGL capability is enabled or not for this context.
+WebGLRenderingContext,State information,lineWidth(),(Glfloat),,Sets the line width of rasterized lines.
+WebGLRenderingContext,State information,pixelStorei(),"(Glnum, Glint)",,Specifies the pixel storage modes
+WebGLRenderingContext,State information,polygonOffset(),"(Glfloat, Glfloat)",,Specifies the scale factors and units to calculate depth values.
+WebGLRenderingContext,State information,sampleCoverage(),"(Glclampf, Glboolean)",,Specifies multi-sample coverage parameters for anti-aliasing effects.
+WebGLRenderingContext,State information,stencilFunction(),"(Glenum, Glint, Gluint)",,Sets the both front and back function and reference value for stencil testing.
+WebGLRenderingContext,State information,stencilFuncSeparate(),"(Glenum, Glenum, Glint, Gluint)",,Sets the front and/or back function and reference value for stencil testing.
+WebGLRenderingContext,State information,stencilMask(),(Gluint),,Controls enabling and disabling of both the front and back writing of individual bits in the stencil planes.
+WebGLRenderingContext,State information,stencilMaskSeparate(),"(Glenum, Gluint)",,Controls enabling and disabling of front and/or back writing of individual bits in the stencil planes.
+WebGLRenderingContext,State information,stencilOp(),"(Glenum, Glenum, Glenum)",,Sets both the front and back-facing stencil test actions.
+WebGLRenderingContext,State information,stencilOpSeparate(),"(Glenum, Glenum, Glenum, Glenum)",,Sets the front and/or back-facing stencil test actions.
+WebGLRenderingContext,Buffers,bindBuffer(),"(Glenum, WebGLBuffer)",,Binds a WebGLBuffer object to a given target.
+WebGLRenderingContext,Buffers,bufferData(),"(Glenum, Glsizeiptr, Glenum)",,Updates buffer data.
+WebGLRenderingContext,Buffers,bufferSubData(),"(Glenum, Glintptr)",,Updates buffer data starting at a passed offset.
+WebGLRenderingContext,Buffers,createBuffer(),,WebGLBuffer,Creates a WebGLBuffer object.
+WebGLRenderingContext,Buffers,deleteBuffer(),(WebGLBuffer),,Deletes a WebGLBuffer object.
+WebGLRenderingContext,Buffers,getBufferParameter(),"(Gleneum, Glenum)",(depends on parameter),Returns information about the buffer.
+WebGLRenderingContext,Buffers,isBuffer(),(WebGLBuffer),GLboolean,Returns a Boolean indicating if the passed buffer is valid.
+WebGLRenderingContext,Framebuffers,bindFramebuffer(),"(Glenum, WebGLFramebuffer)",,Binds a WebGLFrameBuffer object to a given target.
+WebGLRenderingContext,Framebuffers,checkFramebufferStatus(),(Glenum),GLenum,Returns the status of the framebuffer.
+WebGLRenderingContext,Framebuffers,createFramebuffer(),,WebGLFramebuffer,Creates a WebGLFrameBuffer object.
+WebGLRenderingContext,Framebuffers,deleteFramebuffer(),(WebGLFramebuffer),,Deletes a WebGLFrameBuffer object.
+WebGLRenderingContext,Framebuffers,framebufferRenderbuffer(),"(GLenum, Glenum, Glenum, WebGLRenderbuffer)",,Attaches a WebGLRenderingBuffer object to a WebGLFrameBuffer object.
+WebGLRenderingContext,Framebuffers,framebufferTexture2D(),"(Glenum, Glenum, Glenum, WebGLTexture, Glint)",,Attaches a textures image to a WebGLFrameBuffer object.
+WebGLRenderingContext,Framebuffers,getFramebufferAttachmentParameter(),"(Glenum, Glenum, Glenum)",(depends on parameter),Returns information about the framebuffer.
+WebGLRenderingContext,Framebuffers,isFramebuffer(),(WebGLFramebuffer),GLboolean,Returns a Boolean indicating if the passed WebGLFrameBuffer object is valid.
+WebGLRenderingContext,Framebuffers,readPixels(),"(Glint, Glint, Glsizei, Glsizei, Glenum, Glnum, *Array, Gluint)",,Reads a block of pixels from the WebGLFrameBuffer.
+WebGLRenderingContext,Renderbuffers,bindRenderbuffer(),"(Glenum, WebGLRenderbuffer)",,Binds a WebGLRenderBuffer object to a given target.
+WebGLRenderingContext,Renderbuffers,createRenderbuffer(),,WebGLRenderbuffer,Creates a WebGLRenderBuffer object.
+WebGLRenderingContext,Renderbuffers,deleteRenderbuffer(),(WebGLRenderbuffer),,Deletes a WebGLRenderBuffer object.
+WebGLRenderingContext,Renderbuffers,getRenderbufferParameter(),"(Glenum, Glenum)",(depends on parameter),Returns information about the renderbuffer.
+WebGLRenderingContext,Renderbuffers,isRenderbuffer(),(WebGLRenderbuffer),GLboolean,Returns a Boolean indicating if the passed WebGLRenderingBuffer is valid.
+WebGLRenderingContext,Renderbuffers,renderbufferStorage(),"(Glenum, Glenum, Glsizei, Glsizei)",,Creates a renderbuffer data store.
+WebGLRenderingContext,Textures,bindTexture(),"(Glenum, WebGLTexture)",,Binds a WebGLTexture object to a given target.
+WebGLRenderingContext,Textures,compressedTexImage2D(),"(Glenum, Glint, Glenum, Glsizei, Glsizei, Glsizei, Glint, Glsizei, Glintptr, *Array)",,Specifies a 2D texture image in a compressed format.
+WebGLRenderingContext,Textures,compressedTexSubImage2D(),"(Glenum, Glint, Glint, Glint, Glsizei, Glsizei, Glenum, Glsizei, Glintptr, *Array)",,Specifies a 2D texture sub-image in a compressed format.
+WebGLRenderingContext,Textures,copyTexImage2D(),"(Glenum, Glint, Glenum, Glint, Glint, Glsizei, Glsizei, Glint)",,Copies a 2D texture image.
+WebGLRenderingContext,Textures,copyTexSubImage2D(),"(Glenum, Glint, Glint, Glint, Glint, Glint, Glsizei, Glsizei)",,Copies a 2D texture sub-image.
+WebGLRenderingContext,Textures,createTexture(),,WebGLTexture,Creates a WebGLTexture object.
+WebGLRenderingContext,Textures,deleteTexture(),(WebGLTexture),,Deletes a WebGLTexture object.
+WebGLRenderingContext,Textures,generateMipmap(),(Glenum),,Generates a set of mipmaps for a WebGLTexture object.
+WebGLRenderingContext,Textures,getTexParameter(),"(Glenum, Glenum)",,Returns information about the texture.
+WebGLRenderingContext,Textures,isTexture(),(WebGLTexture),Glboolean,Returns a Boolean indicating if the passed WebGLTexture is valid.
+WebGLRenderingContext,Textures,texImage2D(),"(Glenum, Glint, Glenum, Glsizei, Glsizei, Glint, Glenum, Glenum, *ImageElement*, Glintptr)",,Specifies a 2D texture image.
+WebGLRenderingContext,Textures,texSubImage2d(),"(Glenum, Glint, Glint, Glint, Glsizei, Glsizei, Glenum, Glenum, *Array, Glintptr)",,Updates a sub-rectangle of the current WebGLTexture.
+WebGLRenderingContext,Textures,texParameterf(),"(Glenum, Glfloat, Glenum)",,Sets texture parameters.
+WebGLRenderingContext,Textures,texParameteri(),"(Glenum, Glint, Glenum)",,Sets texture parameters.
+WebGLRenderingContext,Programs and shaders,attachShader(),"(WebGLProgram, WebGLShader)",,Attaches a WebGLShader to a WebGLProgram.
+WebGLRenderingContext,Programs and shaders,bindAttribLocation(),"(WebGLProgram, Gluint, String)",,Binds a generic vertex index to a named attribute variable.
+WebGLRenderingContext,Programs and shaders,compileShader(),(WebGLShader),,Compiles a WebGLShader.
+WebGLRenderingContext,Programs and shaders,createProgram(),,WebGLProgram,Creates a WebGLProgram.
+WebGLRenderingContext,Programs and shaders,createShader(),(Glenum),WebGLShader,Creates a WebGLShader.
+WebGLRenderingContext,Programs and shaders,deleteProgram(),(WebGLProgram),,Deletes a WebGLProgram.
+WebGLRenderingContext,Programs and shaders,deleteShader(),(WebGLShader),,Deletes a WebGLShader.
+WebGLRenderingContext,Programs and shaders,detachShader(),"(WebGLProgram, WebGLShader)",,Detaches a WebGLShader.
+WebGLRenderingContext,Programs and shaders,getAttachedShaders(),(WebGLProgram),[WebGLShader],Returns a list of WebGLShader objects attached to a WebGLProgram.
+WebGLRenderingContext,Programs and shaders,getProgramParameter(),"(WebGLProgram, Glenum)",(depends on parameter),Returns information about the program.
+WebGLRenderingContext,Programs and shaders,getProgramInfoLog(),(WebGLProgram),String,Returns the information log for a WebGLProgram object.
+WebGLRenderingContext,Programs and shaders,getShaderParameter(),"(WebGLShader, Glenum)",(depends on parameter),Returns information about the shader.
+WebGLRenderingContext,Programs and shaders,getShaderPrecisionFormat(),"(Glenum, Glenum)",WebGLShaderPrecisionFormat,Returns a WebGLShaderPrecisionFormat object describing the precision for the numeric format of the shader.
+WebGLRenderingContext,Programs and shaders,getShaderInfoLog(),(WebGLShader),String,Returns the information log for a WebGLShader object.
+WebGLRenderingContext,Programs and shaders,getShaderSource(),(WebGLShader),String,Returns the source code of a WebGLShader as a string.
+WebGLRenderingContext,Programs and shaders,isProgram(),(WebGLProgram),GLboolean,Returns a Boolean indicating if the passed WebGLProgram is valid.
+WebGLRenderingContext,Programs and shaders,isShader(),(WebGLShader),GLboolean,Returns a Boolean indicating if the passed WebGLShader is valid.
+WebGLRenderingContext,Programs and shaders,linkProgram(),(WebGLProgram),,Links the passed WebGLProgram object.
+WebGLRenderingContext,Programs and shaders,shaderSource(),"(WebGLShader, String)",,Sets the source code in a WebGLShader.
+WebGLRenderingContext,Programs and shaders,useProgram(),(WebGLProgram),,Uses the specified WebGLProgram as part the current rendering state.
+WebGLRenderingContext,Programs and shaders,validateProgram(),(WebGLProgram),,Validates a WebGLProgram.
+WebGLRenderingContext,Uniforms and attributes,disableVertexAttribArray(),(Gluint),,Disables a vertex attribute array at a given position.
+WebGLRenderingContext,Uniforms and attributes,enableVertexAttribArray(),(Gluint),,Enables a vertex attribute array at a given position.
+WebGLRenderingContext,Uniforms and attributes,getActiveAttrib(),"(WebGLProgram, Gluint)",WebGLActiveInfo,Returns information about an active attribute variable.
+WebGLRenderingContext,Uniforms and attributes,getActiveUniform(),"(WebGLProgram, Gluint)",WebGLActiveInfo,Returns information about an active uniform variable.
+WebGLRenderingContext,Uniforms and attributes,getAttribLocation(),"(WebGLProgram, String)",Glint,Returns the location of an attribute variable.
+WebGLRenderingContext,Uniforms and attributes,getUniform(),"(WebGLProgram, WebGLUniformLocation)",(depends on parameter),Returns the value of a uniform variable at a given location.
+WebGLRenderingContext,Uniforms and attributes,getUniformLocation(),"(WebGLProgram, String)",WebGLUniformLocation,Returns the location of a uniform variable.
+WebGLRenderingContext,Uniforms and attributes,getVertexAttrib(),"(Gluint, Glenum)",(depends on parameter),Returns information about a vertex attribute at a given position.
+WebGLRenderingContext,Uniforms and attributes,getVertexAttribOffset(),"(Gluint, Glenum)",Glintptr,Returns the address of a given vertex attribute.
+WebGLRenderingContext,Uniforms and attributes,uniform[1234][fi][v](),"(WebGLUniformLocation, value*)",,Specifies a value for a uniform variable.
+WebGLRenderingContext,Uniforms and attributes,uniformMatrix[234]fv(),"(WebGLUniformLocation, Glboolean, Float32Array)",,Specifies a matrix value for a uniform variable.
+WebGLRenderingContext,Uniforms and attributes,vertexAttrib[1234]f[v](),"(Gluint, Number*, Float32Array)",,Specifies a value for a generic vertex attribute.
+WebGLRenderingContext,Uniforms and attributes,vertexAttribPointer(),"(Gluint, Glint, Glenum, Glboolean, Glsizei, Glintptr)",,Specifies the data formats and locations of vertex attributes in a vertex attributes array.
+WebGLRenderingContext,Drawing buffers,clear(),(Glbitfield),,Clears specified buffers to preset values.
+WebGLRenderingContext,Drawing buffers,drawArrays(),"(Glenum, Glint, Glsizei)",,Renders primitives from array data.
+WebGLRenderingContext,Drawing buffers,drawElements(),"(Glenum, Glsizei, Gleenum, Glintptr)",,Renders primitives from element array data.
+WebGLRenderingContext,Drawing buffers,finish(),,,Blocks execution until all previously called commands are finished.
+WebGLRenderingContext,Drawing buffers,flush(),,,"Empties different buffer commands, causing all commands to be executed as quickly as possible."
+WebGLRenderingContext,Color spaces,drawingBufferColorSpace,String assignment,,Specifies the color space of the WebGL drawing buffer.
+WebGLRenderingContext,Color spaces,unpackColorSpace(),String assignment,,Specifies the color space to convert to when importing textures.
+WebGL2RenderingContext,Buffers,bufferData(),"(Glenum, Glsizeiptr, *ArrayBuffer, Glenum, Gluint, Gluint)",,Initializes and creates the buffer object's data store.
+WebGL2RenderingContext,Buffers,bufferSubData(),"(Glenum, Glintptr, *ArrayBuffer, Gluint, Gluint)",,Updates a subset of a buffer object's data store.
+WebGL2RenderingContext,Buffers,copyBufferSubData(),"(Glenum, Glintptr, Glsizei)",,Copies part of the data of a buffer to another buffer.
+WebGL2RenderingContext,Buffers,getBufferSubData(),"(Glenum, Glintptr, data, Gluint, Gluint)",,Reads data from a buffer and writes them to an ArrayBuffer or SharedArrayBuffer.
+WebGL2RenderingContext,Framebuffers,blitFramebuffeer(),"(Glint, Glint, Gibitfield, Glenum)",,Transfers a block of pixels from the read framebuffer to the draw framebuffer.
+WebGL2RenderingContext,Framebuffers,framebufferTextureLayer(),"(Glenum, Glenum, WebGLTexture, Glint, Glint)",,Attaches a single layer of a texture to a framebuffer.
+WebGL2RenderingContext,Framebuffers,invalidateFramebuffer(),"(Glenum, Glnum*)",,Invalidates the contents of attachments in a framebuffer.
+WebGL2RenderingContext,Framebuffers,invalidateSubFramebuffer(),"(Glenum, Glenum*, Glint, Glint, Glsizei, Glsizei)",,Invalidates portions of the contents of attachments in a framebuffer
+WebGL2RenderingContext,Framebuffers,readBuffer(),(Glenum),,Selects a color buffer as the source for pixels.
+WebGL2RenderingContext,Renderbuffers,getInternalFormatParameter(),"(Glenum, Glenum, Glenum)",(depends on parameter),Returns information about implementation-dependent support for internal formats.
+WebGL2RenderingContext,Renderbuffers,renderbufferStorageMultisample(),"(Glenum, Glsizei, Glenum, Glsizei, Glsizei)",,Creates and initializes a renderbuffer object's data store and allows specifying the number of samples to be used.
+WebGL2RenderingContext,Textures,texStorage2D(),"(Glenum, Glint, Glenum, Glsizei, Glsizei)",,Specifies all levels of two-dimensional texture storage.
+WebGL2RenderingContext,Textures,texStorage3D(),"(Glenum, Glint, Glenum, Glsizei, Glsizei, Glsizei)",,Specifies all levels of a three-dimensional texture or two-dimensional array texture.
+WebGL2RenderingContext,Textures,texImage3D(),"(Glenum, Glint, Glint, Glsizei, Glsizei, Glsizei, Glint, Glenum, Glenum, *ImageElement, data, Glintptr)",,Specifies a three-dimensional texture image.
+WebGL2RenderingContext,Textures,texSubImage3D(),"(Glenum, Glint, Glint, Glint, Glint, Glsizei, Glsizei, Glsizei, Glenum, Glenum, *ImageArray, data, Glintptr)",,Specifies a sub-rectangle of the current 3D texture.
+WebGL2RenderingContext,Textures,copyTexSubImage3d(),"(Glenum, Glint, Glint, Glint, Glint, Glint, Glint, Glsizei, Glsizei)",,Copies pixels from the current WebGLFramebuffer into an existing 3D texture sub-image.
+WebGL2RenderingContext,Textures,compressedTexImage3D(),"(Glenum, Glint, Glenum, Glsizei, Glsizei, Glsizei, Glint, Glsizei, Glintptr)",,Specifies a three-dimensional texture image in a compressed format.
+WebGL2RenderingContext,Textures,compressedTexSubImage3D(),"(Glenum, Glint, Glint, Glint, Glint, Glsizei, Glsizei, Glsizei, Glenum, Glint, Glint, data)",,Specifies a three-dimensional sub-rectangle for a texture image in a compressed format.
+WebGL2RenderingContext,Programs and shaders,getFragDataLocation(),"(WebGLProgram, String)",Glint,Returns the binding of color numbers to user-defined varying out variables.
+WebGL2RenderingContext,Uniforms and attributes,uniform[1234][fi][v](),"(WebGLUniformLocation, Number*)",,Methods specifying values of uniform variables.
+WebGL2RenderingContext,Uniforms and attributes,uniformMatrix[234]x[234]fv(),"(WebGLUniformLocation, Glboolean, Float32Array)",,Methods specifying matrix values for uniform variables.
+WebGL2RenderingContext,Uniforms and attributes,vertexAttribI4[u]i[v](),"(Gluint, Number, *Array)",,Methods specifying integer values for generic vertex attributes.
+WebGL2RenderingContext,Uniforms and attributes,vertexAttribIPointer(),"(Gluint, Glint, Glenum, Glsizei, Glintptr)",,Specifies integer data formats and locations of vertex attributes in a vertex attributes array.
+WebGL2RenderingContext,Color spaces,drawingBufferColorSpace,String assignment,,Specifies the color space of the WebGL drawing buffer.
+WebGL2RenderingContext,Color spaces,unpackColorSpace,String assignment,,Specifies the color space to convert to when importing textures.
+WebGL2RenderingContext,Drawing buffers,vertexAttribDivisor(),"(Gluint, Gluint)",,Modifies the rate at which generic vertex attributes advance when rendering multiple instances of primitives with gl.drawArraysInstanced() and gl.drawElementsInstanced().
+WebGL2RenderingContext,Drawing buffers,drawArraysInstanced(),"(Glenum, Glint, Glsizei, Glsizei)",,"Renders primitives from array data. In addition, it can execute multiple instances of the range of elements."
+WebGL2RenderingContext,Drawing buffers,drawElementsInstanced(),"(Glenum, Glsizei, Glenum, Glintptr, Glsizei)",,"Renders primitives from array data. In addition, it can execute multiple instances of a set of elements."
+WebGL2RenderingContext,Drawing buffers,drawRangeElements(),"(Glenum, Gluint, Gluint, Glsizei, Glenum, Glintptr)",,Renders primitives from array data in a given range.
+WebGL2RenderingContext,Drawing buffers,drawBuffers(),(Glenum*),,Specifies a list of color buffers to be drawn into.
+WebGL2RenderingContext,Drawing buffers,clearBuffer[fiuv](),"(Glenum, Glint, Array, Glfloat, Glint)",,Clears buffers from the currently bound framebuffer.
+WebGL2RenderingContext,Query objects,createQuery(),,WebGLQuery,Creates a new WebGLQuery object.
+WebGL2RenderingContext,Query objects,deleteQuery(),(WebGLQuery),,Deletes a given WebGLQuery object.
+WebGL2RenderingContext,Query objects,isQuery(),(WebGLQuery),GLboolean,Returns true if a given object is a valid WebGLQuery object.
+WebGL2RenderingContext,Query objects,beginQuery(),"(Glenum, WebGLQuery)",,Begins an asynchronous query.
+WebGL2RenderingContext,Query objects,endQuery(),(Glenum),,Marks the end of an asynchronous query.
+WebGL2RenderingContext,Query objects,getQuery(),"(Glenum, Glenum)",WebGLQuery,Returns a WebGLQuery object for a given target.
+WebGL2RenderingContext,Query objects,getQueryParameter(),"(WebGLQuery, Glnum)",(depends on parameter),Returns information about a query.
+WebGL2RenderingContext,Sampler objects,createSampler(),,WebGLSampler,Creates a new WebGLSampler object.
+WebGL2RenderingContext,Sampler objects,deleteSampler(),(WebGLSampler),,Deletes a given WebGLSampler object.
+WebGL2RenderingContext,Sampler objects,bindSampler(),"(Gluint, WebGLSampler)",,Binds a given WebGLSampler to a texture unit.
+WebGL2RenderingContext,Sampler objects,isSampler(),(WebGLSampler),GLboolean,Returns true if a given object is a valid WebGLSampler object.
+WebGL2RenderingContext,Sampler objects,samplerParameter[if](),"(WebGLSampler, Glenum, Glint)",,Sets sampler parameters.
+WebGL2RenderingContext,Sampler objects,getSamplerParameter(),"(WebGLSampler, Glenum)",(depends on parameter),Returns sampler parameter information.
+WebGL2RenderingContext,Sync objects,fenceSync(),"(Glenum, Glbitfield)",WebGLSync,Creates a new WebGLSync object and inserts it into the GL command stream.
+WebGL2RenderingContext,Sync objects,isSync(),(WebGLSync),GLboolean,Returns true if the passed object is a valid WebGLSync object.
+WebGL2RenderingContext,Sync objects,deleteSync(),(WebGLSync),,Deletes a given WebGLSync object.
+WebGL2RenderingContext,Sync objects,clientWaitSync(),"(WebGLSync, Glbitfield, GLint64)",GLenum,Blocks and waits for a WebGLSync object to become signaled or a given timeout to be passed.
+WebGL2RenderingContext,Sync objects,waitSync(),"(WebGLSync, Glbitfield, GLint64)",,"Returns immediately, but waits on the GL server until the given WebGLSync object is signaled."
+WebGL2RenderingContext,Sync objects,getSyncParameter(),"(WebGLSync, Glenum)",(depends on parameter),Returns parameter information of a WebGLSync object.
+WebGL2RenderingContext,Transform feedback,createTransformFeedback(),,WebGLTransformFeedback,Creates and initializes WebGLTransformFeedback objects.
+WebGL2RenderingContext,Transform feedback,deleteTransformFeedback(),(WebGLTransformFeedback),,Deletes a given WebGLTransformFeedback object.
+WebGL2RenderingContext,Transform feedback,isTransformFeedback(),(WebGLTransformFeedback),GLboolean,Returns true if the passed object is a valid WebGLTransformFeedback object.
+WebGL2RenderingContext,Transform feedback,bindTransformFeedback(),"(Glenum, WebGLTransformFeedback)",,Binds a passed WebGLTransformFeedback object to the current GL state.
+WebGL2RenderingContext,Transform feedback,beginTransformFeedback(),(Glenum),,Starts a transform feedback operation.
+WebGL2RenderingContext,Transform feedback,endTransformFeedback(),,,Ends a transform feedback operation.
+WebGL2RenderingContext,Transform feedback,transformFeedbackVaryings(),"(WebGLProgram, Array, Glenum)",,Specifies values to record in WebGLTransformFeedback buffers.
+WebGL2RenderingContext,Transform feedback,getTransformFeedbackVarying(),"(WebGLProgram, Gluint)",WebGLActiveInfo,Returns information about varying variables from WebGLTransformFeedback buffers.
+WebGL2RenderingContext,Transform feedback,pauseTransformFeedback(),,,Pauses a transform feedback operation.
+WebGL2RenderingContext,Transform feedback,resumeTransformFeedback(),,,Resumes a transform feedback operation.
+WebGL2RenderingContext,Uniform buffer objects,bindBufferBase(),"(Glenum, Gluint, WebGLBuffer)",,Binds a given WebGLBuffer to a given binding point (target) at a given index.
+WebGL2RenderingContext,Uniform buffer objects,bindBufferRange(),"(Glenum, Gluint, WebGLBuffer, Glintptr, Glsizeitptr)",,Binds a range of a given WebGLBuffer to a given binding point (target) at a given index.
+WebGL2RenderingContext,Uniform buffer objects,getUniformIndices(),"(WebGLProgram, Array)",Gluint*,Retrieves the indices of a number of uniforms within a WebGLProgram.
+WebGL2RenderingContext,Uniform buffer objects,getActiveUniforms(),"(WebGLProgram, Gluint*, Glenum)",,Retrieves information about active uniforms within a WebGLProgram.
+WebGL2RenderingContext,Uniform buffer objects,getUniformBlockIndex(),"(WebGLProgram, String)",Gluint,Retrieves the index of a uniform block within a WebGLProgram.
+WebGL2RenderingContext,Uniform buffer objects,getActiveUniformBlockParameter(),"(WebGLProgram, Gluint, Glenum)",(depends on parameter),Retrieves information about an active uniform block within a WebGLProgram.
+WebGL2RenderingContext,Uniform buffer objects,getActiveUniformBlockName(),"(WebGLProgram, Gluint)",String,Retrieves the name of the active uniform block at a given index within a WebGLProgram.
+WebGL2RenderingContext,Uniform buffer objects,uniformBlockBinding(),"(WebGLProgram, Gluint, Gluint)",,Assigns binding points for active uniform blocks.
+WebGL2RenderingContext,Vertex array objects,createVertexArray(),,WebGLVertexArrayObject,Creates a new WebGLVertexArrayObject.
+WebGL2RenderingContext,Vertex array objects,deleteVertexArray(),(WebGLVertexArrayObject),,Deletes a given WebGLVertexArrayObject.
+WebGL2RenderingContext,Vertex array objects,isVertexArray(),(WebGLVertexArrayObject),GLboolean,Returns true if a given object is a valid WebGLVertexArrayObject.
+WebGL2RenderingContext,Vertex array objects,bindVertexArray(),(WebGLVertexArrayObject),,Binds a given WebGLVertexArrayObject to the buffer.
