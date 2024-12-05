@@ -2,6 +2,8 @@
  * index.mjs
  */
 
+import wasm_url from "./bin/main.wasm?url";
+
 const APP = {
     "memory": undefined,
     "canvas": document.querySelector("canvas")
@@ -15,7 +17,7 @@ var CONSOLE_LOG_BUFFER = "";
 // guiding facts forcing an undesired translation layer
 // * every function that references a string requires an intermediate translation layer to interpret and forward the appropriate slice
 // * every function that references or returns a WebGLObject of some type requires an intermediate translation layer to read/write map entries from indices
-// * there are also several other funcctions (like `bufferData()`) that require memory copies even though strings are not involved
+// * there are also several other functions (like `bufferData()`) that require memory copies even though strings are not involved
 // * and of course there are functions (like get*Location) that have multiple requirements
 const ENV = {
     "getAttribLocation": (program_id, strPtr, strLen) => { // new (breaks)
@@ -109,7 +111,7 @@ function generateGlApi(gl) {
 
 function onWindowLoad(event) {
     setViewportFromApp(APP);
-    fetchAndInstantiate('bin/main.wasm', {
+    fetchAndInstantiate(wasm_url, {
         "gl": {
             ...generateGlApi(GL),
             ...ENV

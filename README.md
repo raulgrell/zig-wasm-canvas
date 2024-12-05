@@ -1,5 +1,14 @@
 # zig-wasm-canvas
 
+You can run the web application itself via Vite for HMR support, which now also includes automatic rebuilds (and reloads) of the WASM module when the Zig source is changed:
+
+```sh
+yarn install
+yarn run dev
+```
+
+## Background
+
 An example demonstrating Zig interacting with a canvas via JS. It was originally a port from one of the official Mozilla examples. 
 
 https://developer.mozilla.org/en-US/docs/WebAssembly
@@ -8,22 +17,15 @@ This was forked from the following port as a starting point for a testbed for Zi
 
 https://github.com/raulgrell/zig-wasm-webgl
 
-As of Zig v0.12.0, compile with the following command, which has also been verified with Zig v0.13.0:
+As of Zig v0.13.0, the WASM module can be compiled directly with the following command:
 
 ```sh
 zig build-exe src/main.zig -target wasm32-freestanding -fno-entry --export=onInit --export=onAnimationFrame -femit-bin=bin/main.wasm
 ```
 
-You can run the web application itself via Vite for HMR support:
-
-```sh
-yarn install
-yarn run dev
-```
-
 ## Notes For Future Me
 
-The WebGL translation approach used here is a decent pattern that I wouldn't mind adapting to a variety of other browser APIs for utilization by Zig-driven WASM applications.
+The WebGL translation approach used here is a decent pattern that I wouldn't mind adapting to a variety of other browser APIs for utilization by Zig-driven WASM applications (although I would want to add more bindings first and probably organize the Javascript translation layer into its own module for each API).
 
 Consider the following subset of APIs drawn from the MDN listing (https://developer.mozilla.org/en-US/docs/Web/API):
 
@@ -49,8 +51,6 @@ Consider the following subset of APIs drawn from the MDN listing (https://develo
 
 * Web Workers API (as a means to subthread module interfaces)
 
-* WebGPU API (experimental and unsupported by Firefox--!?)
-
 * WebSockets API (e.g., streaming / event-driven data)
 
-For lack of a better name, "Web API Definition" perhaps? Image (from DOM) could also be useful.
+For lack of a better name, "Web API Definition" perhaps? Image (from DOM) could also be useful. Of courrse, a lot of this would be more intelligently handled by using a WebIDL specification to drive a comptime build of the bindings automatically--which would be amazing, but beyond my current Zig skill level. Doing so with the Javascript translation layer (with the appropriate object reference management) would be easier, and probably help the eventual transition to WebGPU.

@@ -16,6 +16,13 @@
 /// * Gluint -> u32
 /// * Glboolean -> u32
 /// * Glintptr -> u32
+///
+/// "Object" (handle) types must persist as references in the Javascript
+/// translation layer, which we have configured here to pass back u32 handles
+/// (indices to an object cache) instead. From Zig's perspective, those u32
+/// values are used in place of the object references. One exception is,
+/// uniform and other variable locations, which are also mapped to strings
+/// against specific shader modules. See `index.mjs` for more details.
 
 // WebGLRenderingContext - Context
 // getContextAttributes()		WebGLContextAttributes	The WebGLRenderingContext.getContextAttributes() method returns a WebGLContextAttributes object that contains the actual context parameters. Might return null, if the context is lost.

@@ -38,7 +38,7 @@ const vertexShader =
 const fragmentShader =
     \\precision mediump float;
     \\void main() {
-    \\ gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+    \\ gl_FragColor = vec4(0.3, 0.5, 0.7, 1.0);
     \\}
 ;
 
@@ -51,7 +51,7 @@ var positionBuffer: u32 = undefined;
 
 export fn onInit() void {
     Console.log("timestamp: {s}\n", .{"2000-01-01T12:00:00Z"});
-    webgl.clearColor(0.0, 0.0, 0.0, 1.0);
+    webgl.clearColor(0.1, 0.1, 0.1, 1.0);
     webgl.enable(webgl.DEPTH_TEST);
     webgl.depthFunc(webgl.LEQUAL);
     webgl.clear(webgl.COLOR_BUFFER_BIT | webgl.DEPTH_BUFFER_BIT);
