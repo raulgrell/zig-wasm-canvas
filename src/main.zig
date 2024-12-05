@@ -50,7 +50,10 @@ var offsetUniformLocation: i32 = undefined;
 var positionBuffer: u32 = undefined;
 
 export fn onInit() void {
+    // test console API with zig-like string interpolation
     Console.log("timestamp: {s}\n", .{"2000-01-01T12:00:00Z"});
+
+    // initialize GL API
     webgl.clearColor(0.1, 0.1, 0.1, 1.0);
     webgl.enable(webgl.DEPTH_TEST);
     webgl.depthFunc(webgl.LEQUAL);
