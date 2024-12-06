@@ -3,15 +3,18 @@
  */
 
 import wasm_url from "./bin/main.wasm?url";
+import WebglJlt from "./WebglJlt.mjs";
+import ConsoleJtl from "./ConsoleJtl.mjs";
 
 const APP = {
     "memory": undefined,
     "canvas": document.querySelector("canvas"),
     "gl": document.querySelector("canvas").getContext("webgl2"),
     "object_map": [], // maps index/u32 against a WebGLObject reference
-    "location_map": {}, // maps program IDs to a second map of names against program locations; this prevents redundant references to identical locations, which are not strongl equivalent once passed back from the WebGL API
-    "console_log_buffer": ""
+    "location_map": {} // maps program IDs to a second map of names against program locations; this prevents redundant references to identical locations, which are not strongl equivalent once passed back from the WebGL API
 };
+
+const WEBGL_JLT = new WebglJlt(document.querySelector("canvas").getContext("webgl2"), undefined);
 
 /**
  * Guiding facts forcing an undesired translation layer:
@@ -119,33 +122,27 @@ function generateGlApi(gl) {
 }
 
 function onWindowLoad(event) {
+    const console_jtl = new ConsoleJtl();
+
     setViewportFromApp(APP);
     fetchAndInstantiate(wasm_url, { // this requires a significant rewrite, which will probably best line up with the API modularization
         "gl": {
-            ...generateGlApi(APP.gl),
-            ...ENV
+            ...generateGlApi(APP.gl), // first generate API procedurally...
+            ...ENV // ...then override with translation bindings where necessary
         },
-        "sys": {
-            "jsConsoleLogWrite": (ptr, len) => {
-                APP.console_log_buffer += new TextDecoder().decode(new Uint8Array(APP.memory.buffer, ptr, len));
-            },
-            "jsConsoleLogFlush": () => {
-                console.log(APP.console_log_buffer);
-                APP.console_log_buffer = "";
-            }
-        },
-        "env": {
-            ...generateGlApi(APP.gl),
-            ...ENV, // some functions from GL are transcribed and therefore must override the generated API
-        }
+        "Console": console_jtl._export_api()
+
     }).then(function (instance) {
+        // pass back memory buffer references to JTL instances
         APP.memory = instance.exports.memory;
+        console_jtl.memory = instance.exports.memory;
+
+        // initialize
         instance.exports.onInit();
 
-        const onAnimationFrame = instance.exports.onAnimationFrame;
-
+        // loop
         function step(timestamp) {
-            onAnimationFrame(timestamp);
+            instance.exports.onAnimationFrame(timestamp);
             window.requestAnimationFrame(step);
         }
         window.requestAnimationFrame(step);

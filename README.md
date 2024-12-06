@@ -62,3 +62,15 @@ As part of an effort to capture the full extend of the bindings and enumerations
 * [bindings.csv](./docs/web/bindings.csv) is a table of all WebGL (including WebGL2 and extensions) function calls, including their parameters and return types (in GL types) as well as a brief description and categorization from MDN
 
 * [enums.csv](./docs/web/enums.csv) is a table of all WebGL (including WebGL2 and extensions) enumeration values, including their enunmeration names and hex values, as well as a brief description and categorization from MDN
+
+## A Word On JTLs
+
+Some interesting patterns are emerging.
+
+* A portion of the JTL can be procedurally exported directly from the API; the remainderr can be overridden by specific translation bindings where necessary
+
+* Lifecycle of the JTL must take place in several steps: instantiation (including an empty reference to a memory buffer); export of API at WASM module instantiation time; then subsequent assigment of the memory buffer reference before any calls are made
+
+* Within Zig, externs are best defined within a specific struct for consistent naming and (internal to the API module) reference; public/exported module symbols can then implement any necessary translations (like string formatting, memory allocation, and deferred deallocation) as needed
+
+We're getting close enough to a pattern, now that we've cleaned things up a great deal, that we can probably take a brief stab at the subset of the WebGL API we use in this demo before moving on to WebGPU, which is exciting.
