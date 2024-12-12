@@ -3,8 +3,8 @@
  */
 
 import wasm_url from "./bin/main.wasm?url";
-import WebglJlt from "./WebglJlt.mjs";
-import ConsoleJtl from "./ConsoleJtl.mjs";
+import WebglJlt from "./lib/WebglJlt.mjs";
+import ConsoleJtl from "./lib/ConsoleJtl.mjs";
 
 const APP = {
     "memory": undefined,

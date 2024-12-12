@@ -26,9 +26,45 @@ var positionAttributeLocation: i32 = undefined;
 var offsetUniformLocation: i32 = undefined;
 var positionBuffer: u32 = undefined;
 
+fn test_console_api() void {
+    // Test Console API
+    Console.assert(false);
+    Console.assert_message(false, "An assertion has failed", .{});
+    Console.clear();
+    Console.count();
+    Console.count_tag("tag", .{});
+    Console.count_reset();
+    Console.count_reset_tag("tag", .{});
+    Console.debug();
+    Console.debug_message("this is a {s} message", .{"debug"});
+    Console.info();
+    Console.info_message("this is a {s} message", .{"info"});
+    Console.log();
+    Console.log_message("timestamp: {s}", .{"2000-01-01T12:00:00Z"});
+    Console.trace();
+    Console.warn();
+    Console.warn_message("this is a {s} message", .{"warning"});
+    Console.group();
+    Console.group_tag("tag", .{});
+    Console.group_collapsed();
+    Console.group_collapsed_tag("tag", .{});
+    Console.group_end();
+    Console.group_end();
+    Console.group_end();
+    Console.group_end();
+    Console.time();
+    Console.time_tag("tag", .{});
+    Console.time_log();
+    Console.time_log_tag("tag", .{});
+    Console.time_end();
+    Console.time_end_tag("tag", .{});
+    Console.exception();
+    Console.exception_message("this is a {s} message", .{"error"});
+}
+
 export fn onInit() void {
-    // test console API with zig-like string interpolation
-    Console.log("timestamp: {s}\n", .{"2000-01-01T12:00:00Z"});
+    // these tests must be invoked at runtime to run against the JS translation layer
+    test_console_api();
 
     // initialize GL API
     webgl.clearColor(0.1, 0.1, 0.1, 1.0);
