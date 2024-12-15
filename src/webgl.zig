@@ -1,4 +1,4 @@
-/// webgl.zig
+/// src/webgl.zig
 ///
 /// Defines the external interface provided by a WebGL2 context passed under the module
 ///
@@ -23,6 +23,9 @@
 /// values are used in place of the object references. One exception is,
 /// uniform and other variable locations, which are also mapped to strings
 /// against specific shader modules. See `index.mjs` for more details.
+const std = @import("std");
+
+pub extern "Webgl" fn clearColor(f32, f32, f32, f32) void;
 
 // WebGLRenderingContext - Context
 // getContextAttributes()		WebGLContextAttributes	The WebGLRenderingContext.getContextAttributes() method returns a WebGLContextAttributes object that contains the actual context parameters. Might return null, if the context is lost.
@@ -40,16 +43,16 @@
 // blendEquationSeparate()	(Glenum, Glenum)		Sets the RGB blend equation and alpha blend equation separately.
 // blendFunc()	(Glenum, Glenum)		Defines which function is used for blending pixel arithmetic.
 // blendFuncSeparate()	(Glenum, Glenum, Glenum, Glenum)		Defines which function is used for blending pixel arithmetic for RGB and alpha components separately.
-pub extern "gl" fn clearColor(f32, f32, f32, f32) void; // Specifies the color values used when clearing color buffers.
+//pub extern "gl" fn clearColor(f32, f32, f32, f32) void; // Specifies the color values used when clearing color buffers.
 // clearDepth()	(Glclampf)		Specifies the depth value used when clearing the depth buffer.
 // clearStencil()	(Glint)		Specifies the stencil value used when clearing the stencil buffer.
 // colorMask()	(Glboolean, Glboolean, Glboolean, Glboolean)		Sets which color components to enable or to disable when drawing or rendering to a WebGLFramebuffer.
 // cullFace()	(Glenum)		Specifies whether or not front- and/or back-facing polygons can be culled.
-pub extern "gl" fn depthFunc(u32) void; // Specifies a function that compares incoming pixel depth to the current depth buffer value.
+pub extern "Webgl" fn depthFunc(u32) void; // Specifies a function that compares incoming pixel depth to the current depth buffer value.
 // depthMask()	(Glboolean)		Sets whether writing into the depth buffer is enabled or disabled.
 // depthRange()	(Glclampf, Glclampf)		Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.
 // disable()	(Glenum)		Disables specific WebGL capabilities for this context.
-pub extern "gl" fn enable(u32) void; // Enables specific WebGL capabilities for this context.
+pub extern "Webgl" fn enable(u32) void; // Enables specific WebGL capabilities for this context.
 // frontFace()	(Glenum)		Specifies whether polygons are front- or back-facing by setting a winding orientation.
 // getParameter()	(Glenum)	(depends on parameter)	Returns a value for the passed parameter name.
 // getError()		Glenum	Returns error information.
@@ -67,10 +70,10 @@ pub extern "gl" fn enable(u32) void; // Enables specific WebGL capabilities for 
 // stencilOpSeparate()	(Glenum, Glenum, Glenum, Glenum)		Sets the front and/or back-facing stencil test actions.
 
 // WebGLRenderingContext - Buffers
-pub extern "gl" fn bindBuffer(u32, u32) void; // Binds a WebGLBuffer object to a given target.
-pub extern "gl" fn bufferData(u32, *const f32, u32, u32) void; // Updates buffer data.
+pub extern "Webgl" fn bindBuffer(u32, u32) void; // Binds a WebGLBuffer object to a given target.
+pub extern "Webgl" fn bufferData(u32, *const f32, u32, u32) void; // Updates buffer data.
 // bufferSubData()	(Glenum, Glintptr)		Updates buffer data starting at a passed offset.
-pub extern "gl" fn createBuffer() u32; // 		WebGLBuffer	Creates a WebGLBuffer object.
+pub extern "Webgl" fn createBuffer() u32; // 		WebGLBuffer	Creates a WebGLBuffer object.
 // deleteBuffer()	(WebGLBuffer)		Deletes a WebGLBuffer object.
 // getBufferParameter()	(Gleneum, Glenum)	(depends on parameter)	Returns information about the buffer.
 // isBuffer()	(WebGLBuffer)	GLboolean	Returns a Boolean indicating if the passed buffer is valid.
@@ -111,11 +114,11 @@ pub extern "gl" fn createBuffer() u32; // 		WebGLBuffer	Creates a WebGLBuffer ob
 // texParameteri()	(Glenum, Glint, Glenum)		Sets texture parameters.
 
 // WebGLRenderingContext - Programs and shaders
-pub extern "gl" fn attachShader(u32, u32) void; // Attaches, to a given WebGLProgram, a given WebGLShader
+pub extern "Webgl" fn attachShader(u32, u32) void; // Attaches, to a given WebGLProgram, a given WebGLShader
 // bindAttribLocation()	(WebGLProgram, Gluint, String)		Binds a generic vertex index to a named attribute variable.
-pub extern "gl" fn compileShader(u32) void; // Compiles a WebGLShader.
-pub extern "gl" fn createProgram() u32; // Creates a WebGLProgram.
-pub extern "gl" fn createShader(u32) u32; // Creates a WebGLShader (of the given type).
+pub extern "Webgl" fn compileShader(u32) void; // Compiles a WebGLShader.
+pub extern "Webgl" fn createProgram() u32; // Creates a WebGLProgram.
+pub extern "Webgl" fn createShader(u32) u32; // Creates a WebGLShader (of the given type).
 // deleteProgram()	(WebGLProgram)		Deletes a WebGLProgram.
 // deleteShader()	(WebGLShader)		Deletes a WebGLShader.
 // detachShader()	(WebGLProgram, WebGLShader)		Detaches a WebGLShader.
@@ -128,30 +131,30 @@ pub extern "gl" fn createShader(u32) u32; // Creates a WebGLShader (of the given
 // getShaderSource()	(WebGLShader)	String	Returns the source code of a WebGLShader as a string.
 // isProgram()	(WebGLProgram)	GLboolean	Returns a Boolean indicating if the passed WebGLProgram is valid.
 // isShader()	(WebGLShader)	GLboolean	Returns a Boolean indicating if the passed WebGLShader is valid.
-pub extern "gl" fn linkProgram(u32) void; // Links the passed WebGLProgram object.
-pub extern "gl" fn shaderSource(u32, *const u8, u32) void; // Sets the source code in a WebGLShader.
-pub extern "gl" fn useProgram(u32) void; // Uses the specified WebGLProgram as part the current rendering state.
+pub extern "Webgl" fn linkProgram(u32) void; // Links the passed WebGLProgram object.
+pub extern "Webgl" fn shaderSource(u32, *const u8, u32) void; // Sets the source code in a WebGLShader.
+pub extern "Webgl" fn useProgram(u32) void; // Uses the specified WebGLProgram as part the current rendering state.
 // validateProgram()	(WebGLProgram)		Validates a WebGLProgram.
 
 // WebGLRenderingContext - Uniforms and attributes
 // disableVertexAttribArray()	(Gluint)		Disables a vertex attribute array at a given position.
-pub extern "gl" fn enableVertexAttribArray(u32) void; // Enables a vertex attribute array at a given position.
+pub extern "Webgl" fn enableVertexAttribArray(u32) void; // Enables a vertex attribute array at a given position.
 // getActiveAttrib()	(WebGLProgram, Gluint)	WebGLActiveInfo	Returns information about an active attribute variable.
 // getActiveUniform()	(WebGLProgram, Gluint)	WebGLActiveInfo	Returns information about an active uniform variable.
-pub extern "gl" fn getAttribLocation(c_uint, *const u8, c_uint) c_int; //  the location of an attribute variable.
+pub extern "Webgl" fn getAttribLocation(c_uint, *const u8, c_uint) c_int; //  the location of an attribute variable.
 // getUniform()	(WebGLProgram, WebGLUniformLocation)	(depends on parameter)	Returns the value of a uniform variable at a given location.
-pub extern "gl" fn getUniformLocation(u32, *const u8, u32) i32; // Returns the location of a uniform variable.
+pub extern "Webgl" fn getUniformLocation(u32, *const u8, u32) i32; // Returns the location of a uniform variable.
 // getVertexAttrib()	(Gluint, Glenum)	(depends on parameter)	Returns information about a vertex attribute at a given position.
 // getVertexAttribOffset()	(Gluint, Glenum)	Glintptr	Returns the address of a given vertex attribute.
 // uniform[1234][fi][v]()	(WebGLUniformLocation, value*)		Specifies a value for a uniform variable.
-pub extern "gl" fn uniform4fv(i32, f32, f32, f32, f32) void; // Specifies a value for a `4fv` uniform variable.
+pub extern "Webgl" fn uniform4fv(i32, f32, f32, f32, f32) void; // Specifies a value for a `4fv` uniform variable.
 // uniformMatrix[234]fv()	(WebGLUniformLocation, Glboolean, Float32Array)		Specifies a matrix value for a uniform variable.
 // vertexAttrib[1234]f[v]()	(Gluint, Number*, Float32Array)		Specifies a value for a generic vertex attribute.
-pub extern "gl" fn vertexAttribPointer(u32, u32, u32, u32, u32, u32) void; // Specifies the data formats and locations of vertex attributes in a vertex attributes array.
+pub extern "Webgl" fn vertexAttribPointer(u32, u32, u32, u32, u32, u32) void; // Specifies the data formats and locations of vertex attributes in a vertex attributes array.
 
 // WebGLRenderingContext - Drawing buffers
-pub extern "gl" fn clear(u32) void; // Clears specified buffers to preset values.
-pub extern "gl" fn drawArrays(u32, i32, i32) void; // Renders primitives from array data.
+pub extern "Webgl" fn clear(u32) void; // Clears specified buffers to preset values.
+pub extern "Webgl" fn drawArrays(u32, i32, i32) void; // Renders primitives from array data.
 // drawElements()	(Glenum, Glsizei, Gleenum, Glintptr)		Renders primitives from element array data.
 // finish()			Blocks execution until all previously called commands are finished.
 // flush()			Empties different buffer commands, causing all commands to be executed as quickly as possible.

@@ -172,3 +172,39 @@ pub fn exception_message(comptime format: []const u8, args: anytype) void {
     defer std.heap.page_allocator.free(formatted);
     Console.exception(formatted.ptr, formatted.len);
 }
+
+pub fn run_api_tests() void {
+    // Test Console API
+    assert(false);
+    assert_message(false, "An assertion has failed", .{});
+    clear();
+    count();
+    count_tag("tag", .{});
+    count_reset();
+    count_reset_tag("tag", .{});
+    debug();
+    debug_message("this is a {s} message", .{"debug"});
+    info();
+    info_message("this is a {s} message", .{"info"});
+    log();
+    log_message("timestamp: {s}", .{"2000-01-01T12:00:00Z"});
+    trace();
+    warn();
+    warn_message("this is a {s} message", .{"warning"});
+    group();
+    group_tag("tag", .{});
+    group_collapsed();
+    group_collapsed_tag("tag", .{});
+    group_end();
+    group_end();
+    group_end();
+    group_end();
+    time();
+    time_tag("tag", .{});
+    time_log();
+    time_log_tag("tag", .{});
+    time_end();
+    time_end_tag("tag", .{});
+    exception();
+    exception_message("this is a {s} message", .{"error"});
+}

@@ -14,8 +14,9 @@ const build_args = [
     "src/main.zig",
     "-target", "wasm32-freestanding",
     "-fno-entry",
-    "--export=onInit",
-    "--export=onAnimationFrame",
+    "--export=enter",
+    "--export=step",
+    "--export=exit",
     `-femit-bin=${wasmOutputPath}`
 ];
 
