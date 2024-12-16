@@ -149,13 +149,14 @@ pub extern "Webgl" fn getUniformLocation(u32, *const u8, u32) i32; // Returns th
 // uniform[1234][fi][v]()	(WebGLUniformLocation, value*)		Specifies a value for a uniform variable.
 pub extern "Webgl" fn uniform4fv(i32, f32, f32, f32, f32) void; // Specifies a value for a `4fv` uniform variable.
 // uniformMatrix[234]fv()	(WebGLUniformLocation, Glboolean, Float32Array)		Specifies a matrix value for a uniform variable.
+pub extern "Webgl" fn uniformMatrix4fv(i32, bool, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32) void; // Specifies values for a 4fv uniform matrix
 // vertexAttrib[1234]f[v]()	(Gluint, Number*, Float32Array)		Specifies a value for a generic vertex attribute.
 pub extern "Webgl" fn vertexAttribPointer(u32, u32, u32, u32, u32, u32) void; // Specifies the data formats and locations of vertex attributes in a vertex attributes array.
 
 // WebGLRenderingContext - Drawing buffers
 pub extern "Webgl" fn clear(u32) void; // Clears specified buffers to preset values.
 pub extern "Webgl" fn drawArrays(u32, i32, i32) void; // Renders primitives from array data.
-// drawElements()	(Glenum, Glsizei, Gleenum, Glintptr)		Renders primitives from element array data.
+pub extern "Webgl" fn drawElements(u32, i32, u32, u32) void; // Renders primitives from element array data.
 // finish()			Blocks execution until all previously called commands are finished.
 // flush()			Empties different buffer commands, causing all commands to be executed as quickly as possible.
 

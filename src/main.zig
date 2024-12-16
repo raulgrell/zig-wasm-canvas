@@ -1,6 +1,6 @@
 const std = @import("std");
-const Console = @import("./Console.zig");
-const Webgl = @import("./Webgl.zig");
+const ConsoleZtl = @import("./ConsoleZtl.zig");
+const WebglZtl = @import("./WebglZtl.zig");
 
 // Shaders
 
@@ -28,57 +28,67 @@ var positionBuffer: u32 = undefined;
 export fn enter() void {
     // these tests must be invoked at runtime to run against the JS translation layer
     //Console.run_api_tests();
-    //Webgl.run_api_tests();
+    //WebglZtl.run_api_tests();
+    ConsoleZtl.log_message("Stating application entrance...", .{});
 
     // initialize GL API
-    Webgl.clearColor(0.1, 0.1, 0.1, 1.0);
-    Webgl.enable(Webgl.DEPTH_TEST);
-    Webgl.depthFunc(Webgl.LEQUAL);
-    Webgl.clear(Webgl.COLOR_BUFFER_BIT | Webgl.DEPTH_BUFFER_BIT);
+    WebglZtl.clearColor(0.1, 0.1, 0.1, 1.0);
+    WebglZtl.enable(WebglZtl.DEPTH_TEST);
+    WebglZtl.depthFunc(WebglZtl.LEQUAL);
+    WebglZtl.clear(WebglZtl.COLOR_BUFFER_BIT | WebglZtl.DEPTH_BUFFER_BIT);
 
     // create and compile vertex shader
-    const vertex_shader_id = Webgl.createShader(Webgl.VERTEX_SHADER);
-    Webgl.shaderSource(vertex_shader_id, &vertexShader[0], vertexShader.len);
-    Webgl.compileShader(vertex_shader_id);
+    const vertex_shader_id = WebglZtl.createShader(WebglZtl.VERTEX_SHADER);
+    WebglZtl.shaderSource(vertex_shader_id, &vertexShader[0], vertexShader.len);
+    WebglZtl.compileShader(vertex_shader_id);
 
     // create and compile fragment shader
-    const fragment_shader_id = Webgl.createShader(Webgl.FRAGMENT_SHADER);
-    Webgl.shaderSource(fragment_shader_id, &fragmentShader[0], fragmentShader.len);
-    Webgl.compileShader(fragment_shader_id);
+    const fragment_shader_id = WebglZtl.createShader(WebglZtl.FRAGMENT_SHADER);
+    WebglZtl.shaderSource(fragment_shader_id, &fragmentShader[0], fragmentShader.len);
+    WebglZtl.compileShader(fragment_shader_id);
 
     // create, populate, and link shader program
-    shader_program_id = Webgl.createProgram();
-    Webgl.attachShader(shader_program_id, vertex_shader_id);
-    Webgl.attachShader(shader_program_id, fragment_shader_id);
-    Webgl.linkProgram(shader_program_id);
+    shader_program_id = WebglZtl.createProgram();
+    WebglZtl.attachShader(shader_program_id, vertex_shader_id);
+    WebglZtl.attachShader(shader_program_id, fragment_shader_id);
+    WebglZtl.linkProgram(shader_program_id);
 
     const a_position = "a_position";
     const u_offset = "u_offset";
 
-    positionAttributeLocation = Webgl.getAttribLocation(shader_program_id, &a_position[0], a_position.len);
-    offsetUniformLocation = Webgl.getUniformLocation(shader_program_id, &u_offset[0], u_offset.len);
+    positionAttributeLocation = WebglZtl.getAttribLocation(shader_program_id, &a_position[0], a_position.len);
+    offsetUniformLocation = WebglZtl.getUniformLocation(shader_program_id, &u_offset[0], u_offset.len);
 
-    positionBuffer = Webgl.createBuffer();
-    Webgl.bindBuffer(Webgl.ARRAY_BUFFER, positionBuffer);
-    Webgl.bufferData(Webgl.ARRAY_BUFFER, &positions[0], 6, Webgl.STATIC_DRAW);
+    positionBuffer = WebglZtl.createBuffer();
+    WebglZtl.bindBuffer(WebglZtl.ARRAY_BUFFER, positionBuffer);
+    WebglZtl.bufferData(WebglZtl.ARRAY_BUFFER, &positions[0], 6, WebglZtl.STATIC_DRAW);
+    ConsoleZtl.log_message("Finished application entrance!", .{});
 }
 
 var previous: i32 = 0;
 var x: f32 = 0;
 
 export fn step(timestamp: i32) void {
+    //ConsoleZtl.log_message("Starting application timestep...", .{});
+
     const delta = if (previous > 0) timestamp - previous else 0;
     x += @as(f32, @floatFromInt(delta)) / 1000.0;
     if (x > 1) x = -2;
 
-    Webgl.clear(Webgl.COLOR_BUFFER_BIT | Webgl.DEPTH_BUFFER_BIT);
-    Webgl.useProgram(shader_program_id);
-    Webgl.enableVertexAttribArray(@intCast(positionAttributeLocation));
-    Webgl.bindBuffer(Webgl.ARRAY_BUFFER, positionBuffer);
-    Webgl.vertexAttribPointer(@intCast(positionAttributeLocation), 2, Webgl.FLOAT, 0, 0, 0);
-    Webgl.uniform4fv(offsetUniformLocation, x, 0.0, 0.0, 0.0);
-    Webgl.drawArrays(Webgl.TRIANGLES, 0, 3);
+    WebglZtl.clear(WebglZtl.COLOR_BUFFER_BIT | WebglZtl.DEPTH_BUFFER_BIT);
+    WebglZtl.useProgram(shader_program_id);
+    WebglZtl.enableVertexAttribArray(@intCast(positionAttributeLocation));
+    WebglZtl.bindBuffer(WebglZtl.ARRAY_BUFFER, positionBuffer);
+    WebglZtl.vertexAttribPointer(@intCast(positionAttributeLocation), 2, WebglZtl.FLOAT, 0, 0, 0);
+    WebglZtl.uniform4fv(offsetUniformLocation, x, 0.0, 0.0, 0.0);
+    WebglZtl.drawArrays(WebglZtl.TRIANGLES, 0, 3);
     previous = timestamp;
+
+    //ConsoleZtl.log_message("Finished application timestep!", .{});
 }
 
-export fn exit() void {}
+export fn exit() void {
+    ConsoleZtl.log_message("Starting application exit...", .{});
+    // ...
+    ConsoleZtl.log_message("Finished application exit!", .{});
+}
